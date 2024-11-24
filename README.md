@@ -13,8 +13,10 @@ This is a Go library that provides middleware that adds HTTP headers for REST AP
 
 ```
 go-mux-rest-middleware
+├── CODE_OF_CONDUCT.md
 ├── LICENSE
 ├── README.md
+├── SECURITY.md
 ├── go.mod
 ├── go.sum
 └── pkg
