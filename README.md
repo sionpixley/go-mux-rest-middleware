@@ -48,7 +48,7 @@ func main() {
 
     router.Use(mux.CORSMethodMiddleware(router))
 
-    // These are the functions provided by the middleware package.
+    // These are the functions provided by the gmrm package.
     router.Use(gmrm.CorsOriginMiddleware("https://example.com"))
     router.Use(gmrm.CacheControlMiddleware())
     router.Use(gmrm.ContentTypeMiddleware("application/json"))
