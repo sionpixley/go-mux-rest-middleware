@@ -49,12 +49,12 @@ func main() {
     router.Use(mux.CORSMethodMiddleware(router))
 
     // These are the functions provided by the middleware package.
-    router.Use(middleware.SetCorsOriginHeader(router, "https://example.com"))
-    router.Use(middleware.SetCacheControlHeader(router))
-    router.Use(middleware.SetContentTypeHeaders(router, "application/json"))
-    router.Use(middleware.SetFrameHeaders(router))
+    router.Use(middleware.SetCorsOriginHeader("https://example.com"))
+    router.Use(middleware.SetCacheControlHeader())
+    router.Use(middleware.SetContentTypeHeaders("application/json"))
+    router.Use(middleware.SetFrameHeaders())
     // Only add this one if you want HSTS.
-    router.Use(middleware.SetHstsHeader(router, "max-age=63072000; includeSubDomains; preload"))
+    router.Use(middleware.SetHstsHeader("max-age=63072000; includeSubDomains; preload"))
 
     go http.ListenAndServe(":80", http.HandlerFunc(redirectToHttps))
     log.Fatal(http.ListenAndServeTLS(":443", "certfile", "keyfile", router))
