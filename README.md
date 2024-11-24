@@ -1,6 +1,6 @@
 # go-mux-rest-middleware
 
-This is a Go library that provides middleware that adds HTTP headers for REST APIs when using [gorilla/mux](https://github.com/gorilla/mux). This library follows [OWASP REST security guidelines](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers). It only provides middleware for REST APIs that **do not** return any HTML. If your API returns HTML, please implement your own middleware based on OWASP's guidelines.
+Go library that provides middleware that adds HTTP response headers for REST APIs when using [gorilla/mux](https://github.com/gorilla/mux). This library follows [OWASP REST security guidelines](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers). It only provides middleware for REST APIs that **do not** return any HTML. If your API returns HTML, please implement your own middleware based on OWASP's guidelines.
 
 ## Table of contents
 
@@ -20,8 +20,8 @@ go-mux-rest-middleware
 ├── go.mod
 ├── go.sum
 └── pkg
-    └── middleware
-        └── middleware.go
+    └── gmrm
+        └── gmrm.go
 ```
 
 ## How to install
@@ -39,7 +39,7 @@ import (
     "net/http"
 
     "github.com/gorilla/mux"
-    "github.com/sionpixley/go-mux-rest-middleware/pkg/middleware"
+    "github.com/sionpixley/go-mux-rest-middleware/pkg/gmrm"
 )
 
 func main() {
@@ -49,12 +49,12 @@ func main() {
     router.Use(mux.CORSMethodMiddleware(router))
 
     // These are the functions provided by the middleware package.
-    router.Use(middleware.SetCorsOriginHeader("https://example.com"))
-    router.Use(middleware.SetCacheControlHeader())
-    router.Use(middleware.SetContentTypeHeaders("application/json"))
-    router.Use(middleware.SetFrameHeaders())
+    router.Use(gmrm.CorsOriginMiddleware("https://example.com"))
+    router.Use(gmrm.CacheControlMiddleware())
+    router.Use(gmrm.ContentTypeMiddleware("application/json"))
+    router.Use(gmrm.FrameMiddleware())
     // Only add this one if you want HSTS.
-    router.Use(middleware.SetHstsHeader("max-age=63072000; includeSubDomains; preload"))
+    router.Use(gmrm.HstsMiddleware("max-age=63072000; includeSubDomains; preload"))
 
     go http.ListenAndServe(":80", http.HandlerFunc(redirectToHttps))
     log.Fatal(http.ListenAndServeTLS(":443", "certfile", "keyfile", router))
