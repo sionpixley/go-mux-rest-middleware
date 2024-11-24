@@ -16,7 +16,7 @@ import (
 )
 
 // Adds the 'Cache-Control' header with the value 'no-store'.
-func SetCacheControlHeader(router *mux.Router) mux.MiddlewareFunc {
+func SetCacheControlHeader() mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Cache-Control", "no-store")
@@ -27,7 +27,7 @@ func SetCacheControlHeader(router *mux.Router) mux.MiddlewareFunc {
 
 // Adds the 'Content-Type' header with the value of the 'contentType' argument.
 // Also adds the 'X-Content-Type-Options' header with the value 'nosniff'.
-func SetContentTypeHeaders(router *mux.Router, contentType string) mux.MiddlewareFunc {
+func SetContentTypeHeaders(contentType string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", contentType)
@@ -38,7 +38,7 @@ func SetContentTypeHeaders(router *mux.Router, contentType string) mux.Middlewar
 }
 
 // Adds the 'Access-Control-Allow-Origin' header with the value of the 'origin' argument.
-func SetCorsOriginHeader(router *mux.Router, origin string) mux.MiddlewareFunc {
+func SetCorsOriginHeader(origin string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -49,7 +49,7 @@ func SetCorsOriginHeader(router *mux.Router, origin string) mux.MiddlewareFunc {
 
 // Adds the 'Content-Security-Policy' header with the value "frame-ancestors 'none'".
 // Also adds the 'X-Frame-Options' with the value 'DENY'.
-func SetFrameHeaders(router *mux.Router) mux.MiddlewareFunc {
+func SetFrameHeaders() mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Security-Policy", "frame-ancestors 'none'")
@@ -60,7 +60,7 @@ func SetFrameHeaders(router *mux.Router) mux.MiddlewareFunc {
 }
 
 // Adds the 'Strict-Transport-Security' header with the value of the 'value' argument.
-func SetHstsHeader(router *mux.Router, value string) mux.MiddlewareFunc {
+func SetHstsHeader(value string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Strict-Transport-Security", value)
