@@ -1,5 +1,5 @@
 /*
-Package middleware provides functions that add HTTP headers to REST APIs based on [OWASP guidelines].
+Package gmrm provides functions that add HTTP response headers to REST APIs based on [OWASP guidelines].
 
 It only works with the [gorilla/mux] library, and it assumes that your API does not return any HTML.
 If your API returns HTML, please implement custom middleware.
@@ -7,7 +7,7 @@ If your API returns HTML, please implement custom middleware.
 [gorilla/mux]: https://pkg.go.dev/github.com/gorilla/mux
 [OWASP guidelines]: https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers
 */
-package middleware
+package gmrm
 
 import (
 	"net/http"
@@ -15,8 +15,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Adds the 'Cache-Control' header with the value 'no-store'.
-func SetCacheControlHeader() mux.MiddlewareFunc {
+// Adds the 'Cache-Control' response header with the value 'no-store'.
+func CacheControlMiddleware() mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Cache-Control", "no-store")
@@ -25,9 +25,9 @@ func SetCacheControlHeader() mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Content-Type' header with the value of the 'contentType' argument.
-// Also adds the 'X-Content-Type-Options' header with the value 'nosniff'.
-func SetContentTypeHeaders(contentType string) mux.MiddlewareFunc {
+// Adds the 'Content-Type' response header with the value of the 'contentType' argument.
+// Also adds the 'X-Content-Type-Options' response header with the value 'nosniff'.
+func ContentTypeMiddleware(contentType string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", contentType)
@@ -37,8 +37,8 @@ func SetContentTypeHeaders(contentType string) mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Access-Control-Allow-Origin' header with the value of the 'origin' argument.
-func SetCorsOriginHeader(origin string) mux.MiddlewareFunc {
+// Adds the 'Access-Control-Allow-Origin' response header with the value of the 'origin' argument.
+func CorsOriginMiddleware(origin string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
@@ -47,9 +47,9 @@ func SetCorsOriginHeader(origin string) mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Content-Security-Policy' header with the value "frame-ancestors 'none'".
-// Also adds the 'X-Frame-Options' with the value 'DENY'.
-func SetFrameHeaders() mux.MiddlewareFunc {
+// Adds the 'Content-Security-Policy' response header with the value "frame-ancestors 'none'".
+// Also adds the 'X-Frame-Options' response header with the value 'DENY'.
+func FrameMiddleware() mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Security-Policy", "frame-ancestors 'none'")
@@ -59,8 +59,8 @@ func SetFrameHeaders() mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Strict-Transport-Security' header with the value of the 'value' argument.
-func SetHstsHeader(value string) mux.MiddlewareFunc {
+// Adds the 'Strict-Transport-Security' response header with the value of the 'value' argument.
+func HstsMiddleware(value string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Strict-Transport-Security", value)
