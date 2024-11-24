@@ -41,7 +41,7 @@ func SetContentTypeHeaders(contentType string) mux.MiddlewareFunc {
 func SetCorsOriginHeader(origin string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Origin", origin)
 			next.ServeHTTP(w, r)
 		})
 	}
