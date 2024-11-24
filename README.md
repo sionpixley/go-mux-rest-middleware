@@ -11,6 +11,17 @@ This is a Go library that provides middleware that adds HTTP headers for REST AP
 
 ## Project directory structure
 
+```
+go-mux-rest-middleware
+├── LICENSE
+├── README.md
+├── go.mod
+├── go.sum
+└── pkg
+    └── middleware
+        └── middleware.go
+```
+
 ## How to install
 
 `go get github.com/sionpixley/go-mux-rest-middleware`
