@@ -12,7 +12,7 @@ Go library that provides middleware that adds HTTP response headers for REST API
 ## Project directory structure
 
 ```
-go-mux-rest-middleware
+.
 ├── CODE_OF_CONDUCT.md
 ├── LICENSE
 ├── README.md
