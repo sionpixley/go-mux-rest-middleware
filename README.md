@@ -4,12 +4,12 @@ Go library that provides middleware that adds HTTP response headers for REST API
 
 ## Table of contents
 
-1. [Project directory structure](#project-directory-structure)
+1. [Project structure](#project-structure)
 2. [How to install](#how-to-install)
 3. [How to use](#how-to-use)
 4. [Contributing](#contributing)
 
-## Project directory structure
+## Project structure
 
 ```
 .
