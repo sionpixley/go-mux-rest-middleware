@@ -57,7 +57,7 @@ func main() {
     router.Use(gmrm.HstsMiddleware("max-age=63072000; includeSubDomains; preload"))
 
     go http.ListenAndServe(":80", http.HandlerFunc(redirectToHttps))
-    log.Fatal(http.ListenAndServeTLS(":443", "certfile", "keyfile", router))
+    log.Fatalln(http.ListenAndServeTLS(":443", "certfile", "keyfile", router))
 }
 
 func getExample(w http.ResponseWriter, r *http.Request) {
