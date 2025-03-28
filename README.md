@@ -1,6 +1,6 @@
 # go-mux-rest-middleware
 
-Go library that provides middleware that adds HTTP response headers for REST APIs when using [gorilla/mux](https://github.com/gorilla/mux). This library follows [OWASP REST security guidelines](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers). It only provides middleware for REST APIs that **do not** return any HTML. If your API returns HTML, please implement your own middleware based on OWASP's guidelines.
+gmrm is a Go library that provides middleware that adds HTTP response headers for REST APIs when using [gorilla/mux](https://github.com/gorilla/mux). This library follows [OWASP REST security guidelines](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers). It only provides middleware for REST APIs that **do not** return any HTML. If your API returns HTML, please implement your own middleware based on OWASP's guidelines.
 
 ## Table of contents
 
@@ -30,7 +30,7 @@ Go library that provides middleware that adds HTTP response headers for REST API
 
 ## How to use
 
-```
+```go
 package main
 
 import (
