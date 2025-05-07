@@ -13,6 +13,13 @@ gmrm is a Go library that provides middleware that adds HTTP response headers fo
 
 ```
 .
+├── .editorconfig
+├── .github
+│   └── ISSUE_TEMPLATE
+│       ├── bug_report.md
+│       ├── custom.md
+│       └── feature_request.md
+├── .gitignore
 ├── CODE_OF_CONDUCT.md
 ├── LICENSE
 ├── README.md
