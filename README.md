@@ -4,32 +4,9 @@ gmrm is a Go library that provides middleware that adds HTTP response headers fo
 
 ## Table of contents
 
-1. [Project structure](#project-structure)
-2. [How to install](#how-to-install)
-3. [How to use](#how-to-use)
-4. [Contributing](#contributing)
-
-## Project structure
-
-```
-.
-├── .editorconfig
-├── .github
-│   └── ISSUE_TEMPLATE
-│       ├── bug_report.md
-│       ├── custom.md
-│       └── feature_request.md
-├── .gitignore
-├── CODE_OF_CONDUCT.md
-├── LICENSE
-├── README.md
-├── SECURITY.md
-├── go.mod
-├── go.sum
-└── pkg
-    └── gmrm
-        └── gmrm.go
-```
+1. [How to install](#how-to-install)
+2. [How to use](#how-to-use)
+3. [Contributing](#contributing)
 
 ## How to install
 

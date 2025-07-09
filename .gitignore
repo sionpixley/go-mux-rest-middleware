@@ -1,5 +1,2 @@
-# General files and folders
-
 .DS_Store
-
-# Specific files and folders
+.idea
