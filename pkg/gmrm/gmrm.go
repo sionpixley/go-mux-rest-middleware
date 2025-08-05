@@ -15,7 +15,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Adds the 'Cache-Control' response header with the value 'no-store'.
+// CacheControlMiddleware function adds the 'Cache-Control' response header with the value 'no-store'.
 func CacheControlMiddleware() mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +25,7 @@ func CacheControlMiddleware() mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Content-Type' response header with the value of the 'contentType' argument.
+// ContentTypeMiddleware function adds the 'Content-Type' response header with the value of the 'contentType' argument.
 // Also adds the 'X-Content-Type-Options' response header with the value 'nosniff'.
 func ContentTypeMiddleware(contentType string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
@@ -37,7 +37,7 @@ func ContentTypeMiddleware(contentType string) mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Access-Control-Allow-Origin' response header with the value of the 'origin' argument.
+// CorsOriginMiddleware function adds the 'Access-Control-Allow-Origin' response header with the value of the 'origin' argument.
 func CorsOriginMiddleware(origin string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -47,7 +47,7 @@ func CorsOriginMiddleware(origin string) mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Content-Security-Policy' response header with the value "frame-ancestors 'none'".
+// FrameMiddleware function adds the 'Content-Security-Policy' response header with the value "frame-ancestors 'none'".
 // Also adds the 'X-Frame-Options' response header with the value 'DENY'.
 func FrameMiddleware() mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
@@ -59,7 +59,7 @@ func FrameMiddleware() mux.MiddlewareFunc {
 	}
 }
 
-// Adds the 'Strict-Transport-Security' response header with the value of the 'value' argument.
+// HstsMiddleware function adds the 'Strict-Transport-Security' response header with the value of the 'value' argument.
 func HstsMiddleware(value string) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
