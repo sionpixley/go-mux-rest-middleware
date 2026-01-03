@@ -1,6 +1,6 @@
 # go-mux-rest-middleware
 
-gmrm is a Go library that provides middleware that adds HTTP response headers for REST APIs when using [gorilla/mux](https://github.com/gorilla/mux). This library follows [OWASP REST security guidelines](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers). It only provides middleware for REST APIs that **do not** return any HTML. If your API returns HTML, please implement your own middleware based on OWASP's guidelines.
+gmrm is a Go library that provides middleware that adds HTTP response headers for REST APIs. This library follows [OWASP REST security guidelines](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#security-headers). It only provides middleware for REST APIs that **do not** return any HTML. If your API returns HTML, please implement your own middleware based on OWASP's guidelines.
 
 ## Table of contents
 
@@ -21,34 +21,19 @@ import (
     "encoding/json"
     "log"
     "net/http"
-
-    "github.com/gorilla/mux"
+    
     "github.com/sionpixley/go-mux-rest-middleware/pkg/gmrm"
 )
 
 func main() {
-    router := mux.NewRouter()
-    router.HandleFunc("/api/example", getExample).Methods(http.MethodGet, http.MethodOptions)
+    router := http.NewServeMux()
+    router.HandleFunc("GET /api/example", getExample)
 
-    router.Use(mux.CORSMethodMiddleware(router))
-
-    // These are the functions provided by the gmrm package.
-    router.Use(gmrm.CorsOriginMiddleware("https://example.com"))
-    router.Use(gmrm.CacheControlMiddleware())
-    router.Use(gmrm.ContentTypeMiddleware("application/json"))
-    router.Use(gmrm.FrameMiddleware())
-    // Only add this one if you want HSTS.
-    router.Use(gmrm.HstsMiddleware("max-age=63072000; includeSubDomains; preload"))
-
-    go http.ListenAndServe(":80", http.HandlerFunc(redirectToHttps))
-    log.Fatalln(http.ListenAndServeTLS(":443", "certfile", "keyfile", router))
+    go log.Fatalln(http.ListenAndServe(":80", http.HandlerFunc(redirectToHttps)))
+    log.Fatalln(http.ListenAndServeTLS(":443", "certfile", "keyfile", useMiddleware(router)))
 }
 
 func getExample(w http.ResponseWriter, r *http.Request) {
-    if r.Method == http.MethodOptions {
-        return
-    }
-
     err := json.NewEncoder(w).Encode("example")
     if err != nil {
         w.WriteHeader(http.StatusInternalServerError)
@@ -58,6 +43,16 @@ func getExample(w http.ResponseWriter, r *http.Request) {
 
 func redirectToHttps(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "https://example.com"+r.RequestURI, http.StatusMovedPermanently)
+}
+
+func useMiddleware(h http.Handler) http.Handler {
+    h = gmrm.CORSMiddleware(h, "https://example", "DELETE, GET, OPTIONS, PATCH, POST", "*")
+    h = gmrm.CacheControlMiddleware(h)
+    h = gmrm.ContentTypeMiddleware(h, "application/json")
+    h = gmrm.FrameMiddleware(h)
+    // Only add this one if you want HSTS.
+    h = gmrm.HSTSMiddleware(h, "max-age=63072000; includeSubDomains; preload")
+    return h
 }
 ```
 
