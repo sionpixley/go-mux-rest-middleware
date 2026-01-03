@@ -29,10 +29,15 @@ func ContentTypeMiddleware(next http.Handler, contentType string) http.Handler {
 	})
 }
 
-// CORSOriginMiddleware function adds the 'Access-Control-Allow-Origin' response header with the value of the 'origin' argument.
-func CORSOriginMiddleware(next http.Handler, origin string) http.Handler {
+// CORSMiddleware function adds some response headers regarding CORS.
+// It adds the 'Access-Control-Allow-Origin' response header with the value of the 'origin' argument.
+// It adds the 'Access-Control-Allow-Methods' response header with the value of the 'methods' argument.
+// It adds the 'Access-Control-Allow-Headers' response header with the value of the 'headers' argument.
+func CORSMiddleware(next http.Handler, origin string, methods string, headers string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", origin)
+		w.Header().Set("Access-Control-Allow-Methods", methods)
+		w.Header().Set("Access-Control-Allow-Headers", headers)
 
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
